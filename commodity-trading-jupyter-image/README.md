@@ -1,8 +1,11 @@
 DIrectory Structure:
 
 my-trading-agent/
+
 ├── langgraph.json
+
 ├── .env                      # ANTHROPIC_API_KEY, LANGSMITH_API_KEY, LANGSMITH_TRACING=true
+
 ├── requirements.txt
 ├── Dockerfile
 ├── src/
