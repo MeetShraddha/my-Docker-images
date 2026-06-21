@@ -1,0 +1,7 @@
+jupyterlab
+langchain
+langchain-anthropic
+langgraph
+langgraph-cli[inmem]
+langsmith
+python-dotenv
