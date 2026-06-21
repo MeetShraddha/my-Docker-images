@@ -1,0 +1,24 @@
+docker exec -it trading-agent python3 -c "
+from langsmith import Client
+from langchain_core.prompts import ChatPromptTemplate
+
+client = Client()
+
+market_prompt = ChatPromptTemplate.from_messages([
+    ('system', '''You are a senior commodity market analyst at a trading house.
+You have access to current market data and news.
+Give a sharp, concise market read — the way a good analyst briefs a trader.
+3-5 bullet points max. No waffle. Focus on what matters for the trade decision.'''),
+    ('human', '''Trader query: {query}
+
+Commodities of interest: {commodities}
+
+Current market context:
+{market_context}
+
+Give a brief market read relevant to this query.'''),
+])
+
+client.push_prompt('market-agent', object=market_prompt)
+print('PUSHED market-agent')
+"

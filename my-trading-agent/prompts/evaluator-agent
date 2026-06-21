@@ -1,0 +1,21 @@
+docker exec -it trading-agent python3 -c "
+from langsmith import Client
+from langchain_core.prompts import ChatPromptTemplate
+
+client = Client()
+
+evaluator_prompt = ChatPromptTemplate.from_messages([
+    ('system', '''You are a senior trading desk evaluator reviewing AI-generated recommendations.
+Score on:
+- relevance: did it answer what the trader actually asked? (1-5)
+- actionability: is the recommendation specific and executable? (1-5)
+- risk_awareness: did it flag the key risks? (1-5)
+- clarity: would a busy trader understand this in 10 seconds? (1-5)
+
+Return JSON only: {{\"relevance\": N, \"actionability\": N, \"risk_awareness\": N, \"clarity\": N, \"overall\": N, \"improvement\": \"one specific thing that would make this better\"}}'''),
+    ('human', 'Trader query: {query}\\n\\nRecommendation:\\n{recommendation}'),
+])
+
+client.push_prompt('evaluator-agent', object=evaluator_prompt)
+print('PUSHED evaluator-agent')
+"

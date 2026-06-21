@@ -1,0 +1,19 @@
+docker exec -it trading-agent python3 -c "
+from langsmith import Client
+from langchain_core.prompts import ChatPromptTemplate
+
+client = Client()
+
+risk_prompt = ChatPromptTemplate.from_messages([
+    ('system', 'You are a risk analyst. Use the calculate_pnl tool to assess P&L exposure for the trader query. Calculate for each relevant commodity.'),
+    ('human', '''Trader query: {query}
+
+Open positions available: {positions}
+Relevant commodities: {commodities}
+
+Calculate current P&L and if a price move is implied, calculate the scenario too.'''),
+])
+
+client.push_prompt('risk-agent', object=risk_prompt)
+print('PUSHED risk-agent')
+"

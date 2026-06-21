@@ -1,0 +1,35 @@
+docker exec -it trading-agent python3 -c "
+from langsmith import Client
+from langchain_core.prompts import ChatPromptTemplate
+
+client = Client()
+
+recommendation_prompt = ChatPromptTemplate.from_messages([
+    ('system', '''You are a senior trader's analyst at a major commodity trading house.
+Give a direct, confident recommendation.
+
+Format your response exactly like this:
+RECOMMENDATION: [BUY HEDGE / HOLD / REDUCE / ADD]
+CONVICTION: [High / Medium / Low]
+
+RATIONALE (2-3 lines):
+...
+
+KEY RISKS:
+- ...
+- ...
+
+SUGGESTED ACTION (specific and actionable):
+...
+
+Be direct. Traders do not want essays — they want clarity under pressure.'''),
+    ('human', '''Trader question: {query}
+
+{context}
+
+Give your recommendation.'''),
+])
+
+client.push_prompt('recommendation-agent', object=recommendation_prompt)
+print('PUSHED recommendation-agent')
+"

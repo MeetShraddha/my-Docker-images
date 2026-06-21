@@ -1,0 +1,22 @@
+docker exec -it trading-agent python3 -c "
+from langsmith import Client
+from langchain_core.prompts import ChatPromptTemplate
+
+client = Client()
+
+intent_prompt = ChatPromptTemplate.from_messages([
+    ('system', '''You are an intent classifier for a commodity trading desk.
+Classify the trader query into:
+- query_type: one of [position_risk, market_outlook, hedge_decision, scenario_analysis, general]
+- commodities: list of commodities mentioned or implied
+- urgency: high / medium / low
+- needs_pnl_calc: true/false
+- needs_market_context: true/false
+
+Return JSON only: {{\"query_type\": \"...\", \"commodities\": [...], \"urgency\": \"...\", \"needs_pnl_calc\": true, \"needs_market_context\": true, \"summary\": \"one line summary of what trader wants\"}}'''),
+    ('human', '{query}'),
+])
+
+client.push_prompt('intent-agent', object=intent_prompt)
+print('PUSHED successfully')
+"
