@@ -63,6 +63,11 @@
 6. Every run is also traced in LangSmith automatically (since
    `LANGSMITH_TRACING=true` is set) — no extra code needed.
 
+URL to view LangSmith CLI from browser:
+```
+   https://smith.langchain.com/studio/?baseUrl=http://localhost:2024
+```
+
 ## Running the eval suite
 
 ```bash
