@@ -30,4 +30,5 @@ Every so often — say, when a project's dependencies settle — add the package
 ```
 docker build -t my-jupyter .
 ```
+
 This keeps your image (the reusable blueprint) in sync with what you've actually been using, so a future fresh container has them pre-installed instead of you re-installing by hand again.
