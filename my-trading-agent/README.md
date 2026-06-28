@@ -1,11 +1,12 @@
-# Trading Desk Multi-Agent — LangGraph + LangSmith
+# Trading Desk Multi-Agent - LangGraph + LangSmith
 
 ## First-time setup
 
 1. Copy `.env.example` to `.env` and fill in your real `ANTHROPIC_API_KEY`
    and `LANGSMITH_API_KEY`.
+   Alternately you may also have .env.dev, .env.staging, .env.production etc
 
-2. **Push your prompts to LangSmith Hub** (one-time, before the graph can run).
+3. **Push your prompts to LangSmith Hub** (one-time, before the graph can run).
    The graph pulls prompts by name at runtime — they don't exist yet until
    you push them. Open a notebook or `python -i` session and run something
    like:
@@ -39,12 +40,12 @@
    original notebook's agent functions; move it into a `ChatPromptTemplate`
    the same way.
 
-3. Build the Docker image:
+4. Build the Docker image:
    ```bash
    docker build -t my-trading-agent .
    ```
 
-4. Run it (Jupyter + LangGraph CLI ports both exposed):
+5. Run it (Jupyter + LangGraph CLI ports both exposed):
    ```bash
    docker run -d --name trading-agent \
      -p 8888:8888 -p 2024:2024 \
@@ -53,14 +54,14 @@
      my-trading-agent
    ```
 
-5. View the graph visually:
+6. View the graph visually:
    ```bash
    docker exec -it trading-agent langgraph dev --host 0.0.0.0
    ```
    Then open the LangGraph Studio URL it prints — you'll see each node
    execute, inspect state at every step, and replay individual runs.
 
-6. Every run is also traced in LangSmith automatically (since
+7. Every run is also traced in LangSmith automatically (since
    `LANGSMITH_TRACING=true` is set) — no extra code needed.
 
 URL to view LangSmith CLI from browser:
